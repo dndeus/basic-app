@@ -7,4 +7,4 @@ Route::controller('password', 'Auth\RemindersController');
 
 Route::get('/', function(){
     return 'hey';
-});
+})->before('auth');

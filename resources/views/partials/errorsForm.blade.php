@@ -1,7 +1,7 @@
 @if ($errors->any())
-<ul class="alert-danger">
+<div class="alert alert-danger alert-dismissable">
     @foreach ( $errors->all() as $error )
-    <li>{!! $error !!}</li>
+    {!! $error !!} <br>
     @endforeach
-</ul>
+</div>
 @endif
