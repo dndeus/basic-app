@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\RemindRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\PasswordBroker;
@@ -44,12 +45,12 @@ class RemindersController extends Controller {
 	 * @param  Request  $request
 	 * @return Response
 	 */
-	public function postRemind(Request $request)
+	public function postRemind(Request $request,RemindRequest $validation)
 	{
 		switch ($response = $this->passwords->remind($request->only('email')))
 		{
 			case PasswordBroker::INVALID_USER:
-				return redirect()->back()->with('error', trans($response));
+				return redirect()->back()->withErrors(trans($response))->withInput();
 
 			case PasswordBroker::REMINDER_SENT:
 				return redirect()->back()->with('status', trans($response));
@@ -86,7 +87,7 @@ class RemindersController extends Controller {
 
 		$response = $this->passwords->reset($credentials, function($user, $password)
 		{
-			$user->password = bcrypt($password);
+			$user->password = $password;
 
 			$user->save();
 		});
@@ -96,7 +97,7 @@ class RemindersController extends Controller {
 			case PasswordBroker::INVALID_PASSWORD:
 			case PasswordBroker::INVALID_TOKEN:
 			case PasswordBroker::INVALID_USER:
-				return redirect()->back()->with('error', trans($response));
+				return redirect()->back()->withErrors(trans($response))->withInput();
 
 			case PasswordBroker::PASSWORD_RESET:
 				return redirect()->to('/');

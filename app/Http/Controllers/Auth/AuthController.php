@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Repos\User\UserRepoInterface;
+
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\Authenticator;
 
@@ -46,10 +47,10 @@ class AuthController extends Controller {
 	 * @param  RegisterRequest  $request
 	 * @return Response
 	 */
-	public function postRegister(RegisterRequest $request)
+	public function postRegister(RegisterRequest $request,UserRepoInterface $repo)
 	{
 		// Registration form is valid, create user...
-        $user = User::create($request->all());
+        $user = $repo->insert($request->all());
 
 		$this->auth->login($user);
 

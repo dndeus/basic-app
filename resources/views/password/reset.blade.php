@@ -1,11 +1,12 @@
 @extends('layouts.default')
 
 @section('content')
-    <h1>Register</h1>
+<h1>Reset passwrod</h1>
 
     @include('partials.errorsForm')
 
     {!! Form::open() !!}
+        {!! Form::hidden('token',$token) !!}
         <div class="form-group">
             {!! Form::label('email','Email:') !!}
             {!! Form::email('email',null,['class' => 'form-control']) !!}

@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest {
+class RemindRequest extends FormRequest {
 
 	/**
 	 * Get the validation rules that apply to the request.
@@ -12,7 +12,7 @@ class LoginRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-			'email' => 'required|email', 'password' => 'required',
+            'email' => 'required|email'
 		];
 	}
 
